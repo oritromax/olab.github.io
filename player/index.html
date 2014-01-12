@@ -1,0 +1,104 @@
+<html class="">
+<head>
+<title>HTML5 Player</title>
+<meta charset="UTF-8">
+
+<style>@import url(http://haru-projects.hol.es/css/font-awesome.min.css);
+   @import url(http://haru-projects.hol.es/css/icon.css);
+   *, *:before, *:after {
+    margin: 0;
+    padding: 0;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+}
+body {
+    background: #333;
+}
+#player {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin: -80px 0 0 -60px;
+}
+#player:after {
+    position: absolute;
+    content:'';
+    width: 150px;
+    height: 150px;
+    left: 0;
+    background: -webkit-linear-gradient( -45deg, rgba(102, 204, 204, 0.6) 0%, rgba(102, 204, 102, 0.9) 100%);
+    background: linear-gradient( -45deg, rgba(102, 204, 204, 0.6) 0%, rgba(102, 204, 102, 0.9) 100%);
+    border-radius: 25px;
+    box-shadow: 0 0 20px -5px #fff, inset 0 0 10px #fff, inset 0 60px rgba(255, 255, 255, 0.2);
+    -webkit-transform: rotate(45deg);
+    transform: rotate(45deg);
+}
+#playback {
+    position: absolute;
+    color: rgba(102, 204, 255, 1);
+    text-shadow: 0 0 40px #000;
+}
+.fa-play {
+    top: 30px;
+    left: 55px;
+}
+.fa-pause {
+    top: 30px;
+    left: 40px;
+}
+.fa-lg {
+    font-size: 5.3em;
+}
+@-webkit-keyframes beat {
+    0% {-webkit-transform: scale(1); text-shadow: 0 0 40px #000;}
+    50% {-webkit-transform: scale(1.1); text-shadow: 0 0 10px #000;}
+    100% {-webkit-transform: scale(1); text-shadow: 0 0 40px #000;}
+}
+@keyframes beat {
+    0% {transform: scale(1); text-shadow: 0 0 40px #000;}
+    50% {transform: scale(1.1); text-shadow: 0 0 10px #000;}
+    100% {transform: scale(1); text-shadow: 0 0 40px #000;}
+}
+.beat {
+  -webkit-animation: beat 0.8s ease 0s infinite normal;
+  animation: beat 0.8s ease 0s infinite normal;
+}</style></head><body style="">
+<script src="http://haru-projects.hol.es/js/jquery-1.10.2.min.js"></script>
+<div id="player">
+  <span id="playback" class="fa fa-pause fa-lg beat"></span>
+</div>
+<audio src="http://www.jplayer.org/audio/m4a/Miaow-07-Bubble.m4a">
+    <source id="sourceOgg" type="audio/ogg">
+        <source id="sourceMp3" type="audio/mpeg">
+        </audio>
+
+        <script>$( document ).ready(function() {
+            var song = document.getElementsByTagName('audio')[0];
+            song.load();
+        });
+        $(function () {
+            var song = document.getElementsByTagName('audio')[0],
+            sourceOgg = document.getElementsByTagName('audio')[0],
+            sourceMp3 = document.getElementsByTagName('audio')[0];
+
+            sourceOgg.src = 'http://www.jplayer.org/audio/m4a/Miaow-07-Bubble.ogg';
+            sourceMp3.src = 'http://www.jplayer.org/audio/m4a/Miaow-07-Bubble.m4a';
+
+            $('#player').click(function (e) {
+                e.preventDefault();
+                if (song.paused) song.play();
+                else song.pause();
+            });
+            $('#player').bind('click', function() {
+                if ($('#playback').attr('class') == 'fa fa-pause fa-lg beat')
+                    $('#playback').attr('class', 'fa fa-play fa-lg');
+                else
+                    $('#playback').attr('class', 'fa fa-pause fa-lg beat');
+            });
+            song.addEventListener('ended', function () {
+                song.pause();
+                song.currentTime = 0;
+                $('#playback').attr('class', 'fa fa-play fa-lg');
+            });
+        });//@ sourceURL=pen.js</script>
+    </body></html>

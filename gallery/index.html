@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <title>Oritro's Experiment Lab - Flickr Gallery</title>
+        <meta charset="UTF-8" />
+        <style type="text/css">
+                body{ font-size:20px/1.3;
+                    font-family: 'Droid Sans', sans-serif;
+                    max-width: 1366px;
+                    max-height: 768px;
+
+                 }
+
+                 #context {
+                    float: left; width: 35%;
+                    background: #f76060;
+                    color: #fff;
+                    height: 100%;
+                    border-radius: 3px;
+
+                 }
+
+                 #context p {
+                    margin-top: 50px;
+                    padding-right: 3px;
+                    padding-left: 3px;
+                 }
+
+                 #context h1 {
+                    font-size: 72px;
+                    padding-left: 5px;
+                 }
+
+                 span.super {
+                    text-shadow: 0px 0px 7px  #fff;
+                 }
+                 #context a {
+                    color: #006599;
+                 }
+                
+                #context a:hover {
+                    text-shadow: 0px 0px 2px  #006599;
+                 }
+                #gallery{ float:right; width:60%; }
+    #gallery li{ list-style:none; perspective:100px; -webkit-perspective:100px; margin:1px; float:right; position:relative; transition:.1s; -webkit-transition:0.1s; }
+        #gallery li.video::before{ content:'\25BA'; color:#FFF; font-size:20px; height:20px; width:20px; line-height:0.9; position:absolute; bottom:3px; left:4px; z-index:1; background:rgba(0,0,0,0.4); box-shadow:0 0 0 3px rgba(0,0,0,0.4); border-radius:0 3px 0 0; pointer-events:none; opacity:0; transition:.5s 0.2s; }
+        #gallery li.loaded.video::before{ opacity:1; }
+        #gallery a{ display:block; width:75px; height:68px; vertical-align:bottom; overflow:hidden; background:rgba(0,0,0,0.1);
+                    transition:.4s ease-out; -webkit-transition:0.4s ease-out; -webkit-transform:rotateX(90deg) translate(-50px,-50%); transform:rotateX(90deg) translate(-50px,-50%); }
+        #gallery a:active, #gallery a:focus{ outline:none; }
+        #gallery a img{ min-height:100%; width:100%; transition:.3s ease-out; -webkit-transition:0.3s ease-out;
+
+        transform:scale(0.9); -webkit-transform:scale(0.9); }
+        #gallery .loaded a{ -webkit-transform:rotateX(0deg) translate(0,0); transform:rotateX(0deg) translate(0,0); }
+            #gallery li.loaded:hover{ z-index:2; transform:scale(1.1); -webkit-transform:scale(1.1); }
+            #gallery li.loaded a:hover{ box-shadow:0 0 0 2px #FFF, 0 0 5px 5px #000; transition:.1s; -webkit-transition:0.1s; }
+            #gallery li.loaded:hover img{ transform:scale(1.1); -webkit-transform:scale(1.1); }
+            #gallery li.loaded.video:hover::before{ opacity:0; }
+    
+/*------- media queries -----------*/
+@media all and (max-width:700px){
+    body{ background-position:0 0; background-attachment:inherit; box-shadow:none; }
+    .main, #gallery{ float:none; width:auto; font-size:0.9em; }
+    .main h1{ font-size:5.2em; }
+    .main h2{ font-size:1.5em; }
+    .btn{ position:absolute; right:10px; top:26px; }
+    #gallery li{ margin:0; }
+    #gallery a{ width:55px; height:50px; }
+    #gallery li.loaded:hover img, #gallery li.loaded:hover{ transform:none; -webkit-transform:none; }
+    .main footer{ margin:10px 0; }
+} 
+                
+                #footer {
+                  position:fixed;
+                  left:0px;
+                  bottom:0px;
+                  height:60px;
+                  color:#777;
+                  width:100%;
+                  background:#EEE;
+                }
+
+                #footer p {
+                	padding-left: 10px;
+                	padding-right: 10px;
+                }
+
+                #footer a {
+                	color: #00b5ad;
+                	text-decoration: none;
+                	padding-left: 2px;
+                	padding-right: 2px;
+                	border-radius: 4px;
+                }
+
+                #footer a:hover {
+                	text-shadow: 1px 1px 10px #ffb6b5;
+                }
+
+/* You know, Internet Explorer still live in this world  */
+* html #footer {
+   position:absolute;
+   top:expression((0-(footer.offsetHeight)+(document.documentElement.clientHeight ? document.documentElement.clientHeight : document.body.clientHeight)+(ignoreMe = document.documentElement.scrollTop ? document.documentElement.scrollTop : document.body.scrollTop))+'px');
+}
+                
+        </style>
+        <link rel="stylesheet" href="style.css">
+        <link href="http://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css" rel="stylesheet">
+    <!--[if lt IE 9]><script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+    <script src='photobox.js'></script>
+    <link href='http://fonts.googleapis.com/css?family=Droid+Sans' rel='stylesheet' type='text/css'>
+
+</head>
+        <body>
+        <div id="context">
+
+        <p>
+           <h1> Flickr<br> Gallery<br> with<br> <span class="super">photobox.js</span> </h1>
+        </p>
+
+        <p>
+            <i class="fa fa-link"></i> Flickr [ method: <a href="http://www.flickr.com/services/api/flickr.people.getPublicPhotos.html" target="_blank">flickr.people.getPublicPhotos</a> ] 
+            <br/>
+            <i class="fa fa-link"></i> Flickr [ profile: <a href="http://www.flickr.com/photos/innocent_killer/" target="_blank">www.flickr.com/photos/innocent_killer/</a> ] 
+        </p>
+        </div>
+                <ul id='gallery'></ul>
+                <footer id="footer">
+                <p>Oritro's Experiment Lab //  <a href="http://ioritro.com">Homepage</a> // <a href="http://ioritro.com/lab">Lab Homepage</a></p>
+
+                </footer>
+	
+                 <script src='flickr.js'></script>
+
+                <script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-45812400-1', 'ioritro.com');
+  ga('send', 'pageview');
+
+</script>
+        </body>
+</html>

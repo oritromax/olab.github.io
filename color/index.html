@@ -1,0 +1,98 @@
+<html class=""><head><meta charset="UTF-8">
+
+<link rel="stylesheet" href="/assets/reset/reset.css"><link rel="stylesheet" href="/assets/libs/fullpage/jquery-ui.css">
+      <script style="display: none !important;">      function getSafeJS(js) {        js = js.replace(/location(s+)?=/mi, '');        js = js.replace(/top.location.+=('|")/mi, '');        js = js.replace(/location.replace/mi, '');        js = js.replace(/window(s+)?\[(s+)?("|')l/mi, '');        js = js.replace(/self(s+)?\[(s+)?("|')loc/mi, '');        return js;      }      _ogEval        = window.eval;      window.eval    = function(text) {_ogEval(getSafeJS(text));};      window.innerWidth = window.outerWidth; // Fixes browser bug with it innerWidth reports 0      window.innerHeight = window.outerHeight; // Fixes browser bug with it innerHeight reports 0      </script>
+
+
+<style>*, *:before, *:after {
+  box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+}
+body { padding: 50px; text-align: center; }
+#red, #green, #blue {
+  position: relative;
+  width: 100px; height: 15px;
+  margin: 15px;
+  border-radius: 0;
+  border: 0;
+  background: #FFF;
+  display: inline-block;
+  z-index: 1;
+  box-shadow: 15px 0 0 5px #FFF, 0 0 0 5px  #FFF;
+}
+.ui-slider-handle {
+  cursor: move !important;
+  width: 15px !important; height: 15px !important;
+  margin: 5px 0 0 !important;
+  outline: none !important;
+  border-radius: 0 !important;
+  border: 0 !important;
+  background: #EEE !important;
+}
+#red .ui-slider-range { background: #B30900; }
+#red .ui-slider-handle { border-color: #B30900; }
+#green .ui-slider-range { background: #81B300; }
+#green .ui-slider-handle { border-color: #81B300; }
+#blue .ui-slider-range { background: #008AB3; }
+#blue .ui-slider-handle { border-color: #008AB3; }
+#swatch {
+  cursor: pointer;
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  padding: 0; margin: 0;
+  outline: 0;
+  border: 0;
+  display: box;
+  box-pack: center;
+  box-align: center;
+  display: -ms-flexbox;
+  -ms-flex-pack: center;
+  -ms-flex-align: center;
+  display: -moz-box;
+  -moz-box-pack: center;
+  -moz-box-align: center;
+  display: -webkit-box;
+  -webkit-box-pack: center;
+  -webkit-box-align: center;
+  font-family: 'Tahoma', sans-serif;
+  font-size: 300%;
+  color: #FFF;
+  font-weight: bold;
+  text-align: center;
+  text-shadow: 0 0 5px rgba(0,0,0,.3);
+}</style></head><body style="">
+<div id="red" class="ui-slider ui-slider-horizontal ui-widget ui-widget-content ui-corner-all"><div class="ui-slider-range ui-widget-header ui-slider-range-min" style="width: 19.607843137254903%;"></div><a class="ui-slider-handle ui-state-default ui-corner-all" href="#" style="left: 19.607843137254903%;"></a></div>
+<div id="green" class="ui-slider ui-slider-horizontal ui-widget ui-widget-content ui-corner-all"><div class="ui-slider-range ui-widget-header ui-slider-range-min" style="width: 39.21568627450981%;"></div><a class="ui-slider-handle ui-state-default ui-corner-all" href="#" style="left: 39.21568627450981%;"></a></div>
+<div id="blue" class="ui-slider ui-slider-horizontal ui-widget ui-widget-content ui-corner-all"><div class="ui-slider-range ui-widget-header ui-slider-range-min" style="width: 58.82352941176471%;"></div><a class="ui-slider-handle ui-state-default ui-corner-all" href="#" style="left: 58.82352941176471%;"></a></div>
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script><script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.9.2/jquery-ui.min.js"></script><script src="http://s.codepen.io/assets/libs/empty.js"></script>
+<script>$('<input type="text" id="swatch" value="">').appendTo('body');
+$('body').on('click',function(){ $('#swatch').select(); });
+function hexFromRGB(r, g, b) {
+  var hex = [ r.toString( 16 ), g.toString( 16 ), b.toString( 16 ) ];
+  $.each( hex, function( nr, val ) {
+    if ( val.length === 1 ) { hex[ nr ] = "0" + val; }
+  });
+  return hex.join( "" ).toUpperCase();
+}
+function refreshSwatch() {
+  var red = $( "#red" ).slider( "value" ),
+      green = $( "#green" ).slider( "value" ),
+      blue = $( "#blue" ).slider( "value" ),
+      hex = hexFromRGB( red, green, blue );
+  $( "#swatch" ).css( "background-color", "#" + hex ).attr('value','#' + hex);
+}
+$(function() {
+  $( "#red, #green, #blue" ).slider({
+    orientation: "horizontal",
+    range: "min",
+    max: 255,
+    value: 127,
+    slide: refreshSwatch,
+    change: refreshSwatch
+  });
+  $( "#red" ).slider( "value", 50 );
+  $( "#green" ).slider( "value", 100 );
+  $( "#blue" ).slider( "value", 150 );
+});//@ sourceURL=pen.js</script><input type="text" id="swatch" value="#326496" style="background-color: rgb(50, 100, 150);">
+</body></html>
